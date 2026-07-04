@@ -167,7 +167,7 @@ public class FireworkLauncher : MonoBehaviour
             // Tight, slow, low-gravity so the dot stays put and reads as a letter pixel.
             bm.startSpeed = new ParticleSystem.MinMaxCurve(0.6f * (dotSize / 0.34f));
             bm.startSize = new ParticleSystem.MinMaxCurve(dotSize);
-            bm.startLifetime = new ParticleSystem.MinMaxCurve(1.6f);
+            bm.startLifetime = new ParticleSystem.MinMaxCurve(2.8f);
             bm.gravityModifier = new ParticleSystem.MinMaxCurve(0f);
             burst.Emit(20);
         }
