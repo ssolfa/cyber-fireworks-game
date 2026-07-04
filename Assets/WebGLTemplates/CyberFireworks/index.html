@@ -105,5 +105,11 @@
       };
       document.body.appendChild(script);
     </script>
+    <div id="visitor-counter"><span id="vc-num">…</span>명이 이 밤바다를 다녀갔어요 👀</div>
+    <script>
+      (function(){
+        fetch("https://api.counterapi.dev/v1/cf-ssolfa-2026/visit/up").then(function(r){return r.json();}).then(function(d){ var n=document.getElementById("vc-num"); if(d&&typeof d.count==="number"){ n.textContent=d.count.toLocaleString(); } else { document.getElementById("visitor-counter").style.display="none"; } }).catch(function(){ var e=document.getElementById("visitor-counter"); if(e)e.style.display="none"; });
+      })();
+    </script>
   </body>
 </html>

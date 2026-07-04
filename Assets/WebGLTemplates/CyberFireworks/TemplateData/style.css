@@ -33,3 +33,9 @@ body {
 #unity-build-title { float: right; margin-right: 12px; line-height: 38px; color: #ffd45a; font-weight: 800; letter-spacing: .5px; }
 
 #unity-warning { position: absolute; left: 50%; top: 5%; transform: translate(-50%); background: white; padding: 10px; display: none; }
+
+/* visitor counter layout */
+body { flex-direction: column; gap: 14px; }
+#visitor-counter { text-align: center; font-family: 'GameKR', -apple-system, sans-serif; color: #9fb4e6; font-size: 15px; letter-spacing: .3px; }
+#visitor-counter #vc-num { color: #ffd45a; font-weight: 800; }
+@media (max-width: 700px) { #visitor-counter { display: none; } }
