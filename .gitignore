@@ -44,3 +44,6 @@ Thumbs.db
 
 # Crashlytics
 crashlytics-build.properties
+
+# AI generation cache (duplicates of imported assets)
+/GeneratedAssets/

@@ -10,6 +10,7 @@ public class BeachDecor : MonoBehaviour
     public class Item
     {
         public string name;
+        public string enName;
         public Sprite sprite;
         public Vector2 pos;       // world position
         public float worldHeight; // target height in world units

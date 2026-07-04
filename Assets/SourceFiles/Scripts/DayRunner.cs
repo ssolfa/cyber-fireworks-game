@@ -15,8 +15,12 @@ public class DayRunner : MonoBehaviour
     public Sprite dayBgSprite;
     public Sprite tubeKidSprite;
     public Sprite[] obstacleSprites;
+    public Sprite cloudSprite;
     public Font uiFont;
     public Font pixelFont;
+
+    readonly List<Transform> clouds = new List<Transform>();
+    const float CloudSpeed = 0.7f;
     public AudioSource musicDay;   // upbeat day BGM
     public AudioClip jumpSfx;
     public AudioClip gameOverSfx;
@@ -71,6 +75,26 @@ public class DayRunner : MonoBehaviour
         bgsr.sprite = dayBgSprite; bgsr.sortingLayerName = "Fireworks"; bgsr.sortingOrder = -50;
         FitToCamera(bg.transform, bgsr);
 
+        // drifting clouds (parallax, slower than obstacles)
+        clouds.Clear();
+        if (cloudSprite != null)
+        {
+            float[] cx = { -5f, 0f, 5f, 9f };
+            float[] cy = { 2.4f, 3.3f, 1.9f, 2.9f };
+            float[] cs = { 1.4f, 2.0f, 1.1f, 1.7f };
+            for (int i = 0; i < cx.Length; i++)
+            {
+                var c = new GameObject("Cloud" + i); c.transform.SetParent(dayRoot.transform);
+                c.transform.position = new Vector3(cx[i], cy[i], 0f);
+                var csr = c.AddComponent<SpriteRenderer>();
+                csr.sprite = cloudSprite; csr.sortingLayerName = "Fireworks"; csr.sortingOrder = -40;
+                csr.color = new Color(1f, 1f, 1f, 0.85f);
+                float s = cs[i] / cloudSprite.bounds.size.y;
+                c.transform.localScale = new Vector3(s, s, 1f);
+                clouds.Add(c.transform);
+            }
+        }
+
         var p = new GameObject("TubeKid"); p.transform.SetParent(dayRoot.transform);
         p.transform.position = new Vector3(PlayerX, GroundY, 0f);
         var psr = p.AddComponent<SpriteRenderer>();
@@ -111,9 +135,24 @@ public class DayRunner : MonoBehaviour
         t.localScale = new Vector3(s, s, 1f);
     }
 
+    void DriftClouds()
+    {
+        for (int i = 0; i < clouds.Count; i++)
+        {
+            var c = clouds[i];
+            if (c == null) continue;
+            var p = c.position;
+            p.x -= CloudSpeed * (0.6f + 0.2f * i) * Time.deltaTime; // slight varied speeds
+            if (p.x < -12f) p.x = 12f; // wrap around
+            c.position = p;
+        }
+    }
+
     void Update()
     {
         if (!active) return;
+
+        DriftClouds(); // keep clouds moving even on game-over/pause for ambiance
 
         if (EscPressed()) { ExitDay(); return; }
         if (gameOver) { if (RetryPressed()) Reset(); return; }
@@ -244,7 +283,7 @@ public class DayRunner : MonoBehaviour
         var scSh = scoreText.gameObject.AddComponent<Shadow>();
         scSh.effectColor = new Color(0.1f, 0.2f, 0.5f, 0.7f); scSh.effectDistance = new Vector2(3, -3);
 
-        MakeText(canvas.transform, "SPACE / 클릭 : 점프      ESC : 나가기", 26, uiFont, new Color(0.1f, 0.15f, 0.3f, 0.9f),
+        MakeText(canvas.transform, Loc.T("SPACE / 클릭 : 점프      ESC : 나가기", "SPACE / Click : Jump      ESC : Exit"), 26, uiFont, new Color(0.1f, 0.15f, 0.3f, 0.9f),
             new Vector2(0.5f, 0f), new Vector2(0, 40), new Vector2(1200, 46));
 
         // game over panel
@@ -258,7 +297,7 @@ public class DayRunner : MonoBehaviour
         overText = MakeText(opRt, "GAME OVER", 48, pixelFont, new Color(1f, 0.3f, 0.4f, 1f),
             new Vector2(0.5f, 0.5f), new Vector2(0, 40), new Vector2(700, 260));
 
-        MakeText(opRt, "R : 다시하기      ESC : 나가기", 28, uiFont, new Color(0.4f, 0.92f, 1f, 1f),
+        MakeText(opRt, Loc.T("R : 다시하기      ESC : 나가기", "R : Retry      ESC : Exit"), 28, uiFont, new Color(0.4f, 0.92f, 1f, 1f),
             new Vector2(0.5f, 0f), new Vector2(0, 108), new Vector2(700, 50));
 
         // feedback button (opens the Google Form)
@@ -268,7 +307,7 @@ public class DayRunner : MonoBehaviour
         var fimg = fbRt.gameObject.AddComponent<Image>(); fimg.color = new Color(0.12f, 0.18f, 0.34f, 1f);
         var fol = fbRt.gameObject.AddComponent<Outline>(); fol.effectColor = new Color(1f, 0.83f, 0.35f, 1f); fol.effectDistance = new Vector2(2, -2);
         var fbtn = fbRt.gameObject.AddComponent<Button>(); fbtn.targetGraphic = fimg;
-        MakeText(fbRt, "💬 의견 남기기", 26, uiFont, new Color(1f, 0.83f, 0.35f, 1f),
+        MakeText(fbRt, Loc.T("💬 의견 남기기", "💬 Feedback"), 26, uiFont, new Color(1f, 0.83f, 0.35f, 1f),
             new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(340, 58));
         fbtn.onClick.AddListener(() => Application.OpenURL(GameManager.FeedbackUrl));
 

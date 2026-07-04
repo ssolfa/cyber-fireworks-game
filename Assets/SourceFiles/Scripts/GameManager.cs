@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
     private readonly List<Text> styleButtonTexts = new List<Text>();
     private readonly List<Image> styleCardBgs = new List<Image>();
     private LetterFireworks letterFw;
+    private LetterInputWeb letterWeb;
     private GameObject letterPanel;
     private InputField letterInput;
     private Text idleBtnLabel;
@@ -79,6 +80,13 @@ public class GameManager : MonoBehaviour
         dayRunner = FindFirstObjectByType<DayRunner>();
         letterFw = FindFirstObjectByType<LetterFireworks>();
         decor = FindFirstObjectByType<BeachDecor>();
+
+        // browser-native Korean input bridge (WebGL); no-op in editor
+        var bridgeGO = new GameObject("KoreanInputBridge");
+        bridgeGO.transform.SetParent(transform, false);
+        letterWeb = bridgeGO.AddComponent<LetterInputWeb>();
+        letterWeb.letterFw = letterFw;
+
         font = uiFont != null ? uiFont : Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
         pxFont = pixelFont != null ? pixelFont : font;
         fireworkIcon = LoadSprite("Pixel_FireworkIcon");
@@ -103,7 +111,7 @@ public class GameManager : MonoBehaviour
     {
         if (dayRunner == null || dayRunner.IsActive) return;
         moonClicks++;
-        if (autoLabel != null) autoLabel.text = moonClicks < MoonClicksToDay ? "달빛이 일렁인다... (" + moonClicks + "/" + MoonClicksToDay + ")" : "";
+        if (autoLabel != null) autoLabel.text = moonClicks < MoonClicksToDay ? Loc.T("달빛이 일렁인다... ", "The moonlight shimmers... ") + "(" + moonClicks + "/" + MoonClicksToDay + ")" : "";
         if (moonClicks >= MoonClicksToDay)
         {
             moonClicks = 0;
@@ -159,12 +167,23 @@ public class GameManager : MonoBehaviour
         // Full-screen dim/blocker shown behind modal panels (shop / letter input).
         // Its raycastTarget swallows clicks so fireworks don't fire behind panels.
         var dimRt = NewRect("DimOverlay", canvas.transform); Stretch(dimRt);
-        AddImage(dimRt, new Color(0f, 0f, 0f, 0.55f));
+        AddImage(dimRt, new Color(0f, 0f, 0f, 0f)); // invisible, but still blocks clicks behind panels
         dimOverlay = dimRt.gameObject;
         dimOverlay.SetActive(false);
 
         BuildShopPanel();
         BuildPausePanel();
+    }
+
+    // Switch language and rebuild the UI (used from the start screen).
+    void ToggleLanguage()
+    {
+        Loc.EN = !Loc.EN;
+        Time.timeScale = 1f;
+        if (canvas != null) Destroy(canvas.gameObject);
+        styleButtons.Clear(); styleButtonTexts.Clear(); styleCardBgs.Clear();
+        BuildUI();
+        ShowIntro();
     }
 
     void BuildPausePanel()
@@ -181,11 +200,11 @@ public class GameManager : MonoBehaviour
         var pt = AddText(t, "PAUSED", 56, GOLD, TextAnchor.MiddleCenter); pt.font = pxFont;
         var psh = t.gameObject.AddComponent<Shadow>(); psh.effectColor = new Color(0.92f,0.12f,0.52f,0.72f); psh.effectDistance = new Vector2(4,-4);
 
-        var resume = MakeButton(rt, "계속하기", new Vector2(360, 76), new Vector2(0, 40), new Vector2(0.5f, 0.5f), new Color(0.12f,0.18f,0.34f,1f), CYAN, 34, out _);
+        var resume = MakeButton(rt, Loc.T("계속하기", "Resume"), new Vector2(360, 76), new Vector2(0, 40), new Vector2(0.5f, 0.5f), new Color(0.12f,0.18f,0.34f,1f), CYAN, 34, out _);
         resume.onClick.AddListener(Resume);
-        var fb = MakeButton(rt, "💬 의견 남기기", new Vector2(360, 68), new Vector2(0, -50), new Vector2(0.5f, 0.5f), new Color(0.10f,0.14f,0.28f,1f), GOLD, 28, out _);
+        var fb = MakeButton(rt, Loc.T("💬 의견 남기기", "💬 Feedback"), new Vector2(360, 68), new Vector2(0, -50), new Vector2(0.5f, 0.5f), new Color(0.10f,0.14f,0.28f,1f), GOLD, 28, out _);
         fb.onClick.AddListener(OpenFeedback);
-        var quit = MakeButton(rt, "게임 종료", new Vector2(360, 68), new Vector2(0, -140), new Vector2(0.5f, 0.5f), new Color(0.10f,0.14f,0.28f,1f), new Color(1f,0.5f,0.5f), 30, out _);
+        var quit = MakeButton(rt, Loc.T("게임 종료", "Quit"), new Vector2(360, 68), new Vector2(0, -140), new Vector2(0.5f, 0.5f), new Color(0.10f,0.14f,0.28f,1f), new Color(1f,0.5f,0.5f), 30, out _);
         quit.onClick.AddListener(QuitGame);
 
         pausePanel.SetActive(false);
@@ -326,17 +345,21 @@ public class GameManager : MonoBehaviour
         sh.effectColor = new Color(0.92f, 0.12f, 0.52f, 0.8f); // neon magenta shadow
         sh.effectDistance = new Vector2(6, -6);
 
-        // Korean title (Pretendard)
+        // subtitle (KO shows Korean title, EN shows nothing extra)
         var kr = NewRect("TitleKR", rt);
         kr.anchorMin = kr.anchorMax = new Vector2(0.5f, 0.5f); kr.pivot = new Vector2(0.5f, 0.5f);
         kr.sizeDelta = new Vector2(1200, 70); kr.anchoredPosition = new Vector2(0, -30);
-        AddText(kr, "사이버 불꽃놀이", 48, CYAN, TextAnchor.MiddleCenter, FontStyle.Normal);
+        AddText(kr, Loc.T("사이버 불꽃놀이", "A cozy fireworks night"), 48, CYAN, TextAnchor.MiddleCenter, FontStyle.Normal);
 
-        // bottom tagline (Pretendard)
+        // bottom tagline
         var tag = NewRect("Tagline", rt);
         tag.anchorMin = new Vector2(0.5f, 0); tag.anchorMax = new Vector2(0.5f, 0); tag.pivot = new Vector2(0.5f, 0);
         tag.sizeDelta = new Vector2(1400, 56); tag.anchoredPosition = new Vector2(0, 54);
-        AddText(tag, "방구석에서 불꽃놀이를 즐겨보세요", 34, new Color(1f, 1f, 1f, 0.92f), TextAnchor.MiddleCenter, FontStyle.Normal);
+        AddText(tag, Loc.T("방구석에서 불꽃놀이를 즐겨보세요", "Enjoy fireworks from your cozy room"), 34, new Color(1f, 1f, 1f, 0.92f), TextAnchor.MiddleCenter, FontStyle.Normal);
+
+        // language toggle (top-right of start screen)
+        var lang = MakeButton(rt, Loc.T("한 / EN", "KO / EN"), new Vector2(180, 64), new Vector2(-116, -42), new Vector2(1, 1), new Color(0.10f,0.14f,0.28f,0.95f), CYAN, 28, out _);
+        lang.onClick.AddListener(ToggleLanguage);
 
         // PRESS START button (pixel font)
         var start = MakeButton(rt, "▶ PRESS START", new Vector2(460, 108), new Vector2(0, -190), new Vector2(0.5f, 0.5f), new Color(0.10f,0.14f,0.28f,0.95f), CYAN, 44, out var startLabel);
@@ -357,7 +380,7 @@ public class GameManager : MonoBehaviour
         gh.onClick.AddListener(() => Application.OpenURL("https://github.com/ssolfa"));
 
         // feedback (Google Form) — bottom-left
-        var fb = MakeButton(rt, "💬 의견 남기기", new Vector2(300, 60), new Vector2(190, 34), new Vector2(0, 0), new Color(0.10f,0.14f,0.28f,0.92f), GOLD, 28, out _);
+        var fb = MakeButton(rt, Loc.T("💬 의견 남기기", "💬 Feedback"), new Vector2(300, 60), new Vector2(190, 34), new Vector2(0, 0), new Color(0.10f,0.14f,0.28f,0.92f), GOLD, 28, out _);
         fb.onClick.AddListener(OpenFeedback);
     }
 
@@ -376,14 +399,14 @@ public class GameManager : MonoBehaviour
         AddImage(chip, PANEL); AddPixelBorder(chip.gameObject, GOLD);
         var slt = NewRect("t", chip);
         slt.anchorMin = new Vector2(0,0); slt.anchorMax = new Vector2(1,1); slt.offsetMin = new Vector2(16,0); slt.offsetMax = new Vector2(-10,0);
-        AddText(slt, "🌙 여름밤 해변", 26, GOLD, TextAnchor.MiddleLeft);
+        AddText(slt, Loc.T("🌙 여름밤 해변", "🌙 Summer Beach"), 26, GOLD, TextAnchor.MiddleLeft);
 
         // top-right: shop + letter-firework buttons
-        var shopBtn = MakeButton(rt, "상점", new Vector2(200, 68), new Vector2(-125, -58), new Vector2(1, 1), new Color(0.10f,0.14f,0.28f,0.95f), CYAN, 30, out _);
+        var shopBtn = MakeButton(rt, Loc.T("상점", "Shop"), new Vector2(200, 68), new Vector2(-125, -80), new Vector2(1, 1), new Color(0.10f,0.14f,0.28f,0.95f), CYAN, 30, out _);
         shopBtn.onClick.AddListener(OpenShop);
-        var letterBtn = MakeButton(rt, "글자불꽃", new Vector2(220, 68), new Vector2(-350, -58), new Vector2(1, 1), new Color(0.10f,0.14f,0.28f,0.95f), GOLD, 28, out _);
-        letterBtn.onClick.AddListener(OpenLetterPanel);
-        var idleBtn = MakeButton(rt, "", new Vector2(300, 68), new Vector2(-590, -58), new Vector2(1, 1), new Color(0.10f,0.14f,0.28f,0.95f), CYAN, 26, out idleBtnLabel);
+        var letterBtn = MakeButton(rt, Loc.T("글자불꽃", "Text FW"), new Vector2(220, 68), new Vector2(-350, -80), new Vector2(1, 1), new Color(0.10f,0.14f,0.28f,0.95f), GOLD, 28, out _);
+        letterBtn.onClick.AddListener(OnLetterButton);
+        var idleBtn = MakeButton(rt, "", new Vector2(300, 64), new Vector2(178, 46), new Vector2(0, 0), new Color(0.10f,0.14f,0.28f,0.95f), CYAN, 26, out idleBtnLabel);
         idleBtn.onClick.AddListener(ToggleIdle);
 
         BuildLetterPanel(canvas.transform); // direct canvas child so it draws above the dim overlay
@@ -398,37 +421,58 @@ public class GameManager : MonoBehaviour
         var hl = NewRect("Hint", rt);
         hl.anchorMin = new Vector2(0.5f, 0); hl.anchorMax = new Vector2(0.5f, 0); hl.pivot = new Vector2(0.5f, 0);
         hl.sizeDelta = new Vector2(1600, 44); hl.anchoredPosition = new Vector2(0, 26);
-        hintLabel = AddText(hl, "하늘 클릭 → 불꽃 발사   ·   아이 클릭 → 자동 불꽃쇼   ·   달 여러 번 클릭 → ???   ·   ESC → 메뉴", 24, new Color(1,1,1,0.8f), TextAnchor.MiddleCenter, FontStyle.Normal);
+        hintLabel = AddText(hl, Loc.T("하늘 클릭 → 불꽃 발사   ·   아이 클릭 → 자동 불꽃쇼   ·   달 여러 번 클릭 → ???   ·   ESC → 메뉴", "Click sky → launch   ·   Click the kid → auto show   ·   Click the moon a few times → ???   ·   ESC → menu"), 24, new Color(1,1,1,0.8f), TextAnchor.MiddleCenter, FontStyle.Normal);
     }
 
     void BuildLetterPanel(Transform parent)
     {
         var rt = NewRect("LetterPanel", parent);
         rt.anchorMin = new Vector2(0.5f, 1); rt.anchorMax = new Vector2(0.5f, 1); rt.pivot = new Vector2(0.5f, 1);
-        rt.sizeDelta = new Vector2(880, 120); rt.anchoredPosition = new Vector2(0, -110);
+        rt.sizeDelta = new Vector2(940, 160); rt.anchoredPosition = new Vector2(0, -100);
         letterPanel = rt.gameObject;
         AddImage(rt, PANEL); AddPixelBorder(rt.gameObject, GOLD);
 
-        // input field
+        var hint = NewRect("LetterHint", rt);
+        hint.anchorMin = new Vector2(0,1); hint.anchorMax = new Vector2(1,1); hint.pivot = new Vector2(0.5f,1);
+        hint.sizeDelta = new Vector2(0, 30); hint.anchoredPosition = new Vector2(0, -12);
+        AddText(hint, Loc.T("불꽃으로 만들 글자를 입력하세요 (한글/영문)", "Type letters to shoot as fireworks"), 22, new Color(1,1,1,0.6f), TextAnchor.MiddleCenter, FontStyle.Normal);
+
         var fieldRt = NewRect("Field", rt);
-        fieldRt.anchorMin = new Vector2(0, 0.5f); fieldRt.anchorMax = new Vector2(0, 0.5f); fieldRt.pivot = new Vector2(0, 0.5f);
-        fieldRt.sizeDelta = new Vector2(560, 74); fieldRt.anchoredPosition = new Vector2(24, 0);
+        fieldRt.anchorMin = new Vector2(0, 0); fieldRt.anchorMax = new Vector2(0, 0); fieldRt.pivot = new Vector2(0, 0);
+        fieldRt.sizeDelta = new Vector2(560, 70); fieldRt.anchoredPosition = new Vector2(24, 24);
         var fieldImg = AddImage(fieldRt, new Color(0.03f, 0.04f, 0.09f, 1f)); AddPixelBorder(fieldRt.gameObject, CYAN);
         letterInput = fieldRt.gameObject.AddComponent<InputField>();
         letterInput.textComponent = MakeChildText(fieldRt, 34, INK, TextAnchor.MiddleLeft);
-        var ph = MakeChildText(fieldRt, 30, new Color(1,1,1,0.4f), TextAnchor.MiddleLeft);
-        ph.text = "영문/숫자 입력 (예: I LOVE U)";
+        var ph = MakeChildText(fieldRt, 28, new Color(1,1,1,0.4f), TextAnchor.MiddleLeft);
+        ph.text = Loc.T("예: 사랑해 / I LOVE U", "e.g. I LOVE U");
         letterInput.placeholder = ph;
         letterInput.targetGraphic = fieldImg;
-        letterInput.characterLimit = 10;
+        letterInput.characterLimit = 12;
         letterInput.onSubmit.AddListener(SubmitLetters);
 
-        var go = MakeButton(rt, "쏘기", new Vector2(120, 74), new Vector2(-150, 0), new Vector2(1, 0.5f), new Color(0.12f,0.18f,0.34f,1f), CYAN, 30, out _);
+        var go = MakeButton(rt, Loc.T("쏘기", "Shoot"), new Vector2(150, 70), new Vector2(-238, 24), new Vector2(1, 0), new Color(0.12f,0.18f,0.34f,1f), CYAN, 30, out _);
         go.onClick.AddListener(() => SubmitLetters(letterInput.text));
-        var x = MakeButton(rt, "✕", new Vector2(64, 74), new Vector2(-24, 0), new Vector2(1, 0.5f), new Color(0.10f,0.14f,0.28f,1f), GOLD, 30, out _);
+        var x = MakeButton(rt, Loc.T("닫기", "Close"), new Vector2(120, 70), new Vector2(-82, 24), new Vector2(1, 0), new Color(0.10f,0.14f,0.28f,1f), GOLD, 26, out _);
         x.onClick.AddListener(() => { letterPanel.SetActive(false); ShowDim(false); });
 
         letterPanel.SetActive(false);
+    }
+
+    // WebGL: use the browser's native prompt (real Korean IME). Editor/standalone:
+    // fall back to the on-canvas input field (mainly for dev testing).
+    void OnLetterButton()
+    {
+        if (LetterInputWeb.IsWebGL && letterWeb != null)
+        {
+            if (letterPanel != null) letterPanel.SetActive(false);
+            ShowDim(false);
+            letterWeb.Ask();
+            if (launcher != null) launcher.SuppressClicks(0.4f);
+        }
+        else
+        {
+            OpenLetterPanel();
+        }
     }
 
     Text MakeChildText(RectTransform parent, int size, Color color, TextAnchor anchor)
@@ -478,7 +522,7 @@ public class GameManager : MonoBehaviour
         var hintR = NewRect("ShopHint", rt);
         hintR.anchorMin = new Vector2(0, 1); hintR.anchorMax = new Vector2(1, 1); hintR.pivot = new Vector2(0.5f, 1);
         hintR.sizeDelta = new Vector2(0, 40); hintR.anchoredPosition = new Vector2(0, -108);
-        AddText(hintR, "아이템을 잠금해제하고 해변을 꾸며보세요", 24, CYAN, TextAnchor.MiddleCenter, FontStyle.Normal);
+        AddText(hintR, Loc.T("아이템을 잠금해제하고 해변을 꾸며보세요", "Unlock items and decorate your beach"), 24, CYAN, TextAnchor.MiddleCenter, FontStyle.Normal);
 
         // 2-column card grid
         var grid = NewRect("Grid", rt);
@@ -509,7 +553,7 @@ public class GameManager : MonoBehaviour
             var nm = NewRect("Name", card);
             nm.anchorMin = new Vector2(0, 1); nm.anchorMax = new Vector2(1, 1); nm.pivot = new Vector2(0.5f, 1);
             nm.offsetMin = new Vector2(120, -60); nm.offsetMax = new Vector2(-12, -14);
-            AddText(nm, item.name, 30, INK, TextAnchor.MiddleLeft);
+            AddText(nm, Loc.T(item.name, string.IsNullOrEmpty(item.enName) ? item.name : item.enName), 30, INK, TextAnchor.MiddleLeft);
 
             // action button — anchored bottom-center of the card (pivot stays 0.5,0.5).
             // card is 390 wide, button 220 → fits with margin; nudged right of the icon.
@@ -603,7 +647,7 @@ public class GameManager : MonoBehaviour
     {
         if (idleBtnLabel != null)
         {
-            idleBtnLabel.text = idleOn ? "자동발사 ON" : "자동발사 OFF";
+            idleBtnLabel.text = idleOn ? Loc.T("자동발사 ON", "AUTO ON") : Loc.T("자동발사 OFF", "AUTO OFF");
             idleBtnLabel.color = idleOn ? CYAN : new Color(1f, 1f, 1f, 0.55f);
         }
     }
@@ -611,6 +655,6 @@ public class GameManager : MonoBehaviour
     void UpdateAutoLabel()
     {
         if (autoLabel == null) return;
-        autoLabel.text = autoShow ? "★ 자동 불꽃쇼 진행 중 — 아이를 클릭해 멈추기" : "";
+        autoLabel.text = autoShow ? Loc.T("★ 자동 불꽃쇼 진행 중 — 아이를 클릭해 멈추기", "★ Auto show running — click the kid to stop") : "";
     }
 }

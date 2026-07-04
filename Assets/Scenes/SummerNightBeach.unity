@@ -1378,6 +1378,7 @@ MonoBehaviour:
   obstacleSprites:
   - {fileID: 21300000, guid: 56b18c75dd33f47ccabcf89176d7f491, type: 3}
   - {fileID: 21300000, guid: 572fa45d1eef64b57abbe33824fff9e4, type: 3}
+  cloudSprite: {fileID: 21300000, guid: 9857ccea895fa448da6ddbd898e5273a, type: 3}
   uiFont: {fileID: 12800000, guid: e42424b285f484dfc9174ca9701e2dcc, type: 3}
   pixelFont: {fileID: 12800000, guid: 889a46fed3103445ba30b3dd916a9dde, type: 3}
   musicDay: {fileID: 1093041398}
@@ -1410,6 +1411,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BeachDecor
   items:
   - name: "\uB3D7\uC790\uB9AC"
+    enName: Mat
     sprite: {fileID: 21300000, guid: 944565db01e3e494a97d8239bc8f1d84, type: 3}
     pos: {x: -4, y: -4.15}
     worldHeight: 1.5
@@ -1419,6 +1421,7 @@ MonoBehaviour:
     placed: 0
     instance: {fileID: 0}
   - name: "\uB2F4\uC694"
+    enName: Blanket
     sprite: {fileID: 21300000, guid: 1c8cfb3c3e94d4e308c494b584f6243a, type: 3}
     pos: {x: -5.5, y: -4}
     worldHeight: 0.9
@@ -1428,6 +1431,7 @@ MonoBehaviour:
     placed: 0
     instance: {fileID: 0}
   - name: "\uBAA8\uB2E5\uBD88"
+    enName: Campfire
     sprite: {fileID: 21300000, guid: 6bfdb8eb271de46b7b6c8a7c73adda94, type: 3}
     pos: {x: -2.4, y: -3.9}
     worldHeight: 1.5
@@ -1437,6 +1441,7 @@ MonoBehaviour:
     placed: 0
     instance: {fileID: 0}
   - name: "\uD30C\uB77C\uC194"
+    enName: Parasol
     sprite: {fileID: 21300000, guid: 5d71077bd440d40d1a8125f613ab3d67, type: 3}
     pos: {x: -4, y: -2.2}
     worldHeight: 3
@@ -1446,6 +1451,7 @@ MonoBehaviour:
     placed: 0
     instance: {fileID: 0}
   - name: "\uBCC4 \uBA38\uB9AC\uB760"
+    enName: Star Band
     sprite: {fileID: 21300000, guid: 35e13eca35169432aa8444e4e15ad699, type: 3}
     pos: {x: -4, y: -3.25}
     worldHeight: 0.62
@@ -1455,6 +1461,7 @@ MonoBehaviour:
     placed: 0
     instance: {fileID: 0}
   - name: "\uB9D0\uB791\uC774"
+    enName: Squishy
     sprite: {fileID: 21300000, guid: c1f143900ba38450f88245d2209bff0c, type: 3}
     pos: {x: -3.1, y: -4.15}
     worldHeight: 0.7
