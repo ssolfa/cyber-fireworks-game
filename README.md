@@ -52,7 +52,7 @@
 - **WebGL `.jslib` 브릿지** - Unity 기본 입력이 못 하는 한글 IME를 브라우저 네이티브 입력으로 우회
 > 배경, 캐릭터, 사운드 등 에셋은 모두! Unity AI로 생성했어요.
 
-## 🔗 링크
+## 🔗 Links
 
 - **Play**: [cyber-fireworks.vercel.app](https://cyber-fireworks.vercel.app) · [itch.io](https://ssolfa.itch.io/cyber-fireworks)
 - **개발기 / Devlog**: [게임도 바이브코딩이 된다고? ...진짜 되네](https://5ffthewall.tistory.com/145)
