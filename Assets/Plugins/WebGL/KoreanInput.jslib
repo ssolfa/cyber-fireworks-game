@@ -52,11 +52,13 @@ mergeInto(LibraryManager.library, {
 
     function cleanup() { if (overlay.parentNode) overlay.parentNode.removeChild(overlay); }
     function submit() { var v = input.value || ''; cleanup(); SendMessage(obj, method, v); }
+    // Closing without submitting: tell Unity so it can restore keyboard capture.
+    function dismiss() { cleanup(); SendMessage(obj, 'OnKoreanCancel', ''); }
     ok.onclick = submit;
-    cancel.onclick = cleanup;
+    cancel.onclick = dismiss;
     input.addEventListener('keydown', function (e) {
       if (e.key === 'Enter') { e.preventDefault(); submit(); }
-      else if (e.key === 'Escape') { e.preventDefault(); cleanup(); }
+      else if (e.key === 'Escape') { e.preventDefault(); dismiss(); }
       e.stopPropagation();
     });
     overlay.addEventListener('keydown', function (e) { e.stopPropagation(); });

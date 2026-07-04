@@ -32,6 +32,11 @@ public class LetterInputWeb : MonoBehaviour
     public void Ask()
     {
 #if UNITY_WEBGL && !UNITY_EDITOR
+        // Unity WebGL captures ALL keyboard input by default, which preventDefaults
+        // key events and blocks English/Latin typing in the HTML overlay (Korean still
+        // works because IME uses composition events). Release capture while the overlay
+        // is open, then restore it on submit/cancel.
+        WebGLInput.captureAllKeyboardInput = false;
         WebPromptSend(gameObject.name, "OnKoreanInput",
             Loc.T("불꽃으로 만들 글자를 입력하세요", "Type letters to shoot as fireworks"),
             "",
@@ -42,6 +47,17 @@ public class LetterInputWeb : MonoBehaviour
     // Called by the browser (SendMessage) with the entered string.
     public void OnKoreanInput(string text)
     {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        WebGLInput.captureAllKeyboardInput = true; // restore game keyboard control
+#endif
         if (letterFw != null) letterFw.Spell(text);
+    }
+
+    // Called by the browser when the overlay is closed without submitting.
+    public void OnKoreanCancel()
+    {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        WebGLInput.captureAllKeyboardInput = true;
+#endif
     }
 }
