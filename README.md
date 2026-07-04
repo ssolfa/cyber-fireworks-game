@@ -34,7 +34,7 @@
 
 ## 🎬 데모
 
-https://github.com/ssolfa/cyber-fireworks-game/raw/main/docs/demo.mp4
+<img src="docs/demo.gif" width="640" alt="Cyber Fireworks demo"/>
 
 
 ## 📸 스크린샷
