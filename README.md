@@ -36,6 +36,7 @@
 
 https://github.com/ssolfa/cyber-fireworks-game/raw/main/docs/demo.mp4
 
+
 ## 📸 스크린샷
 
 | 시작 화면 | 불꽃놀이 | 꾸미기 상점 |
