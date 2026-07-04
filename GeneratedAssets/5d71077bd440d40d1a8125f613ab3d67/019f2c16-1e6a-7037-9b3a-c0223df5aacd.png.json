@@ -1,0 +1,31 @@
+{
+    "asset": "5d71077bd440d40d1a8125f613ab3d67",
+    "fileName": "019f2c16-1e6a-7037-9b3a-c0223df5aacd.png",
+    "prompt": "16-bit pixel art sprite of a colorful beach parasol umbrella, side view, striped canopy, retro SNES game item, crisp clean pixels, centered, transparent background, no text.",
+    "negativePrompt": "",
+    "model": "gpt-image-1-5",
+    "modelName": "GPT Image 1.5",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "refinementMode": "Generation",
+    "pixelateTargetSize": 0,
+    "pixelateKeepImageSize": false,
+    "pixelatePixelBlockSize": 0,
+    "pixelatePixelGridSize": 0,
+    "pixelateMode": 0,
+    "pixelateOutlineThickness": 0,
+    "doodles": {
+        "m_Items": []
+    },
+    "upscaleFactor": 0,
+    "dimensions": {
+        "width": 1024,
+        "height": 1024
+    },
+    "spriteSheet": false,
+    "duration": 0.0,
+    "dynamicParams": {
+        "serializedData": []
+    }
+}

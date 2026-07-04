@@ -1,0 +1,15 @@
+{
+    "asset": "6fc5eb051cd0e4d338dcb19e36401d0e",
+    "fileName": "019f2baf-6998-77d4-be88-d480d94ccfd1.wav",
+    "prompt": "A firework exploding in the sky, a deep boom followed by sparkling crackle tails",
+    "negativePrompt": "",
+    "model": "elevenlabs-sound-effects-v2",
+    "modelName": "ElevenLabs Sound Effects V2",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "duration": 2.5,
+    "autoTrim": false,
+    "hasReference": false,
+    "voice": ""
+}

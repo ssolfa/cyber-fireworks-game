@@ -1,0 +1,15 @@
+{
+    "asset": "70f478c0dd3604ed3b9aa149842af12f",
+    "fileName": "019f2bc2-40eb-7fc8-a75d-e4dbcc4c076f.wav",
+    "prompt": "Short retro game over sound, a soft descending three note chime, gentle and clean, not harsh",
+    "negativePrompt": "",
+    "model": "elevenlabs-sound-effects-v2",
+    "modelName": "ElevenLabs Sound Effects V2",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "duration": 1.399999976158142,
+    "autoTrim": false,
+    "hasReference": false,
+    "voice": ""
+}

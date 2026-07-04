@@ -1,0 +1,31 @@
+{
+    "asset": "b9eddfdaeed5a45a28e35b2e78231fc1",
+    "fileName": "019f292e-e036-7459-a8df-a2ae94c6bd47.png",
+    "prompt": "Photorealistic summer night beach scene viewed from the shore, wide cinematic panorama, 2:1 aspect ratio. Deep indigo and navy starry night sky filling the upper ~60%, thousands of stars with a soft Milky Way band and a bright full moon. Calm dark ocean in the lower ~40% with a long shimmering silver moonlight reflection across gentle ripples. Horizon line about 60% down from the top, with faint warm coastal city lights glowing softly along it. Subtle wispy clouds near the horizon. No people, no text, no watermark. Realistic long-exposure night photography, high detail, atmospheric, serene, clean.",
+    "negativePrompt": "",
+    "model": "gemini-3.0-pro",
+    "modelName": "Gemini 3.0 Pro",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "refinementMode": "Generation",
+    "pixelateTargetSize": 0,
+    "pixelateKeepImageSize": false,
+    "pixelatePixelBlockSize": 0,
+    "pixelatePixelGridSize": 0,
+    "pixelateMode": 0,
+    "pixelateOutlineThickness": 0,
+    "doodles": {
+        "m_Items": []
+    },
+    "upscaleFactor": 0,
+    "dimensions": {
+        "width": 1024,
+        "height": 1024
+    },
+    "spriteSheet": false,
+    "duration": 0.0,
+    "dynamicParams": {
+        "serializedData": []
+    }
+}

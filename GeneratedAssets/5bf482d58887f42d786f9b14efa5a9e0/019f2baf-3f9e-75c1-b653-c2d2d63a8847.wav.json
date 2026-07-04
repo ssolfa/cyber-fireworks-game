@@ -1,0 +1,15 @@
+{
+    "asset": "5bf482d58887f42d786f9b14efa5a9e0",
+    "fileName": "019f2baf-3f9e-75c1-b653-c2d2d63a8847.wav",
+    "prompt": "A single firework rocket launching, quick ascending whistle whoosh",
+    "negativePrompt": "",
+    "model": "elevenlabs-sound-effects-v2",
+    "modelName": "ElevenLabs Sound Effects V2",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "duration": 1.5,
+    "autoTrim": false,
+    "hasReference": false,
+    "voice": ""
+}

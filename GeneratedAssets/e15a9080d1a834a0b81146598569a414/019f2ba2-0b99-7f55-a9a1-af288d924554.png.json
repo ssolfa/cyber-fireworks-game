@@ -1,0 +1,31 @@
+{
+    "asset": "e15a9080d1a834a0b81146598569a414",
+    "fileName": "019f2ba2-0b99-7f55-a9a1-af288d924554.png",
+    "prompt": "16-bit pixel art sprite of a cute kid sitting inside a colorful swim ring float (donut tube), side view facing right, cheerful, retro SNES game character, crisp clean pixels, transparent background, no text.",
+    "negativePrompt": "",
+    "model": "gpt-image-1-5",
+    "modelName": "GPT Image 1.5",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "refinementMode": "Generation",
+    "pixelateTargetSize": 0,
+    "pixelateKeepImageSize": false,
+    "pixelatePixelBlockSize": 0,
+    "pixelatePixelGridSize": 0,
+    "pixelateMode": 0,
+    "pixelateOutlineThickness": 0,
+    "doodles": {
+        "m_Items": []
+    },
+    "upscaleFactor": 0,
+    "dimensions": {
+        "width": 1024,
+        "height": 1024
+    },
+    "spriteSheet": false,
+    "duration": 0.0,
+    "dynamicParams": {
+        "serializedData": []
+    }
+}

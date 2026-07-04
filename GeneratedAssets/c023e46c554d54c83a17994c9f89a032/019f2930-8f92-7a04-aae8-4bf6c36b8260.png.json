@@ -1,0 +1,31 @@
+{
+    "asset": "c023e46c554d54c83a17994c9f89a032",
+    "fileName": "019f2930-8f92-7a04-aae8-4bf6c36b8260.png",
+    "prompt": "Photorealistic summer night beach panorama seen from the shore. Deep indigo starry night sky in the upper 60 percent with countless stars, a faint Milky Way, and a bright full moon. Calm dark ocean in the lower 40 percent with a long shimmering silver moonlight reflection over gentle ripples. Horizon roughly 60 percent down from the top, faint warm coastal lights glowing on the horizon, subtle low clouds. No people, no text, no watermark. Cinematic realistic night photography, long exposure, high detail, serene atmosphere.",
+    "negativePrompt": "",
+    "model": "flux-2-dev",
+    "modelName": "Flux 2 (Dev)",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "refinementMode": "Generation",
+    "pixelateTargetSize": 0,
+    "pixelateKeepImageSize": false,
+    "pixelatePixelBlockSize": 0,
+    "pixelatePixelGridSize": 0,
+    "pixelateMode": 0,
+    "pixelateOutlineThickness": 0,
+    "doodles": {
+        "m_Items": []
+    },
+    "upscaleFactor": 0,
+    "dimensions": {
+        "width": 1536,
+        "height": 768
+    },
+    "spriteSheet": false,
+    "duration": 0.0,
+    "dynamicParams": {
+        "serializedData": []
+    }
+}

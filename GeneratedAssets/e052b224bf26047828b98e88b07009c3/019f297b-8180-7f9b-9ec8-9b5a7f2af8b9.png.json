@@ -1,0 +1,31 @@
+{
+    "asset": "e052b224bf26047828b98e88b07009c3",
+    "fileName": "019f297b-8180-7f9b-9ec8-9b5a7f2af8b9.png",
+    "prompt": "16-bit pixel art sprite of a bright exploding firework burst with radial sparks, gold and pink and cyan, retro arcade style, crisp clean pixels, centered, transparent background. No text.",
+    "negativePrompt": "",
+    "model": "gpt-image-1-5",
+    "modelName": "GPT Image 1.5",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "refinementMode": "Generation",
+    "pixelateTargetSize": 0,
+    "pixelateKeepImageSize": false,
+    "pixelatePixelBlockSize": 0,
+    "pixelatePixelGridSize": 0,
+    "pixelateMode": 0,
+    "pixelateOutlineThickness": 0,
+    "doodles": {
+        "m_Items": []
+    },
+    "upscaleFactor": 0,
+    "dimensions": {
+        "width": 1024,
+        "height": 1024
+    },
+    "spriteSheet": false,
+    "duration": 0.0,
+    "dynamicParams": {
+        "serializedData": []
+    }
+}

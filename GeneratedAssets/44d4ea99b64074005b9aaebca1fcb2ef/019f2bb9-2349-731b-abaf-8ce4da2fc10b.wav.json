@@ -1,0 +1,15 @@
+{
+    "asset": "44d4ea99b64074005b9aaebca1fcb2ef",
+    "fileName": "019f2bb9-2349-731b-abaf-8ce4da2fc10b.wav",
+    "prompt": "A soft light jump whoosh, gentle and subtle, short, clean, not cartoonish",
+    "negativePrompt": "",
+    "model": "elevenlabs-sound-effects-v2",
+    "modelName": "ElevenLabs Sound Effects V2",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "duration": 0.6000000238418579,
+    "autoTrim": false,
+    "hasReference": false,
+    "voice": ""
+}

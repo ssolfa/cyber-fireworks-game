@@ -1,0 +1,31 @@
+{
+    "asset": "944565db01e3e494a97d8239bc8f1d84",
+    "fileName": "019f2c15-7a7b-7f0a-bd3e-1e9f0fc3cef0.png",
+    "prompt": "16-bit pixel art sprite of a cozy striped picnic mat / beach blanket laid flat on the ground, top-down slightly angled view, warm colors, retro SNES game item, crisp clean pixels, centered, transparent background, no text.",
+    "negativePrompt": "",
+    "model": "gpt-image-1-5",
+    "modelName": "GPT Image 1.5",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "refinementMode": "Generation",
+    "pixelateTargetSize": 0,
+    "pixelateKeepImageSize": false,
+    "pixelatePixelBlockSize": 0,
+    "pixelatePixelGridSize": 0,
+    "pixelateMode": 0,
+    "pixelateOutlineThickness": 0,
+    "doodles": {
+        "m_Items": []
+    },
+    "upscaleFactor": 0,
+    "dimensions": {
+        "width": 1024,
+        "height": 1024
+    },
+    "spriteSheet": false,
+    "duration": 0.0,
+    "dynamicParams": {
+        "serializedData": []
+    }
+}

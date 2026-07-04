@@ -1,0 +1,15 @@
+{
+    "asset": "dcf7d1be691dc44d68fa008b223774ff",
+    "fileName": "019f2baf-0852-751d-be2f-9e6efba1409c.wav",
+    "prompt": "Gentle ocean waves lapping on a calm sandy beach at night, soft continuous seamless water ambience, no music",
+    "negativePrompt": "",
+    "model": "elevenlabs-sound-effects-v2",
+    "modelName": "ElevenLabs Sound Effects V2",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "duration": 10.0,
+    "autoTrim": false,
+    "hasReference": false,
+    "voice": ""
+}

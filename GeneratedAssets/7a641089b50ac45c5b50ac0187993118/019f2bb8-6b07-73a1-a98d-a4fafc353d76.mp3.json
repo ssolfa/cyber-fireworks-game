@@ -1,0 +1,15 @@
+{
+    "asset": "7a641089b50ac45c5b50ac0187993118",
+    "fileName": "019f2bb8-6b07-73a1-a98d-a4fafc353d76.mp3",
+    "prompt": "Calm uplifting lo-fi summer night music, gentle warm synth pads, soft mellow beat, relaxing yet slightly hopeful and pretty, not busy, instrumental, seamless background loop",
+    "negativePrompt": "",
+    "model": "google-lyria-3-clip",
+    "modelName": "Google Lyria 3 Clip",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "duration": 10.0,
+    "autoTrim": false,
+    "hasReference": false,
+    "voice": ""
+}
